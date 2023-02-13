@@ -19,10 +19,6 @@
             width: 100%;
         }
 
-        table {
-            /* border: 1px solid black; */
-        }
-
         table tr td {
             width: 100px;
             height: 100px;
@@ -45,6 +41,13 @@
             border: 1px solid black;
             width: 200px;
             height: 100px;
+        }
+
+        .off {
+            border: 1px solid black;
+            width: 200px;
+            height: 100px;
+            display: none;
         }
     </style>
 </head>
@@ -95,137 +98,75 @@
 
     <script>
         let tds = [...document.querySelectorAll('td')];
-
-        let front = [];
-        let back = [];
-
-        for (let i = 1; i < 26; i++) {
-            front.push(i);
-            back.push(i + 25);
-        }
-
         let num = [];
+        let num2 = [];
+        let answer = 1;
+        let cnt = 0;
+        let intervalTime = 0;
+        let off = document.querySelector('.off');
+        let a = 0;
+        let b = 0;
+        let timer = document.querySelector('.timer');
+
         for (let i = 1; i < 26; i++) {
             num.push(i);
+            num2.push(i + 25);
         }
         for (let i = 0; i < 50; i++) {
             let r = Math.floor(Math.random() * 25);
             let temp = num[0];
             num[0] = num[r];
             num[r] = temp;
+
+            r = Math.floor(Math.random() * 25);
+            temp = num2[0];
+            num2[0] = num2[r];
+            num2[r] = temp;
         }
-        console.log(num);
 
+        let gametime = setInterval(() => {
 
-
-        let answer = 1;
-        let cnt = 0;
-
-        let end = null;
-        let start = null;
-        let now = null;
-        let currentTime = 0;
-
-
-        let intervalTime = 0;
+        }, 1);
+        console.log(gametime);
 
 
         let t = setInterval(() => {
             intervalTime += 1;
-            let timer = document.querySelector('.timer');
-            let a = `${Math.floor(intervalTime / 60)}`;
-            let b = `${intervalTime % 60}`;
+            a = `${Math.floor(intervalTime / 60)}`;
+            b = `${intervalTime % 60}`;
             if (a < 10) {
                 a = '0' + a;
             }
             if (b < 10) {
                 b = '0' + b;
             }
-
             timer.innerHTML = `${a} : ${b}`;
-
         }, 1000);
 
-
         tds.forEach((td, i) => {
-            td.innerHTML = i + 1;
-            i += 1;
+            td.innerHTML = num[i];
             td.addEventListener('click', () => {
                 if (td.innerHTML == answer) {
-                    td.innerHTML = i + 25;
+                    td.innerHTML = num2[i];
                     answer += 1;
                     cnt += 1;
                     if (cnt > 25) {
                         td.style.opacity = 0;
                     }
-                    // console.log(answer);
-                    // console.log(cnt);
-                    // if (cnt == 1) {
-                    //     start = new Date();
-                    // }
-                    // if (cnt == 10) {
-                    //     end = new Date();
-                    // }
-                    // now = new Date();
-
-
-
                 };
-                console.log(now - start);
-                console.log(end - start);
-
-                currentTime = now - start;
-                console.log(cnt);
-                // getTime(currentTime);
-
+                let hint = tds.find((td) => td.innerHTML == answer);
+                hint.style.backgroundColor = 'red';
+                setTimeout(() => {
+                    hint.style.backgroundColor = "";
+                }, 300);
                 if (cnt == 10) {
+                    off.style.display = 'block';
+                    timer.style.display = 'none';
+                    off.innerHTML = `기록은 ${a} : ${b}`;
                     clearInterval(t);
-
-                    // getTime(currentTime);
                 }
-
             })
-
         })
-
-        function getTime(currentTime) {
-            let timer = document.querySelector('.timer');
-            let s = Math.floor(currentTime / 1000 % 60);
-            let m = Math.floor(currentTime / 1000 / 60);
-            timer.innerHTML = `${m} : ${s}`;
-        }
-
-        console.log(end - start);
-        var sum = 0;
-
-        window.addEventListener('load', () => {
-            start = new Date().getTime;
-        });
-
-
-
-        var startTime = new Date();
-        for (var i = 1; i <= 10000000; i++) {
-            sum += i;
-        }
-        var endTime = new Date();
-
-        console.log(endTime - startTime);
-
-        let sTime = start;
-        for (var i = 1; i <= 10000000; i++) {
-            sum += i;
-        }
-        let eTime = end;
-
-        console.log(sTime);
-        console.log(eTime);
-        console.log(eTime - sTime);
-        console.log(start);
-
-
-        console.log(startTime);
-        console.log(endTime);
     </script>
 </body>
 

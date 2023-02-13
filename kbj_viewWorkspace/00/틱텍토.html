@@ -38,6 +38,7 @@
             width: 30px;
             border: 1px solid black;
             text-align: center;
+            background-color: lavender;
         }
 
         #hide {
@@ -81,41 +82,44 @@
     <script>
         let turn = false;
         let cnt = 0;
-        let tds = [...document.querySelectorAll('td')];
+
         let temp = [];
         let win = 0;
+        function playgame() {
 
-        tds.forEach((td, index) => {
-            td.addEventListener('click', () => {
-                if (cnt == 9) {
-                    alert('칸없음');
-                    return;
-                }
-                if (td.innerText.trim().length == 0) {
-                    if (turn == false) {
-                        td.innerText = "O";
-                    } else if (turn == true) {
-                        td.innerText = "X";
+            let tds = [...document.querySelectorAll('td')];
+            tds.forEach((td, index) => {
+                td.addEventListener('click', () => {
+                    if (cnt == 9) {
+                        alert('칸없음');
+                        return;
                     }
-                    cnt++;
-                    turn = !turn;
-                } else {
-                    alert('이미선택');
-                }
-                // console.log(index);
-                // console.log(td.innerText);
-                // temp[index] = td.innerText;
-                // console.log(temp);
-                isWin(temp);
-                if (win != 0) {
-                    let text = win == 1 ? 'O 승리' : 'X 승리';
-                    setTimeout(() => {
-                        alert(text);
-                    }, 300);
-                    return;
-                }
+                    if (td.innerText.trim().length == 0) {
+                        if (turn == false) {
+                            td.innerText = "O";
+                        } else if (turn == true) {
+                            td.innerText = "X";
+                        }
+                        cnt++;
+                        turn = !turn;
+                    } else {
+                        alert('이미선택');
+                    }
+                    // console.log(index);
+                    // console.log(td.innerText);
+                    // temp[index] = td.innerText;
+                    // console.log(temp);
+                    isWin(temp);
+                    if (win != 0) {
+                        let text = win == 1 ? 'O 승리' : 'X 승리';
+                        setTimeout(() => {
+                            alert(text);
+                        }, 300);
+                        return;
+                    }
+                });
             });
-        });
+        };
         function isWin(temp) {
             // for (let i = 0; i < temp.length; i++) {
             //     if (temp[i] == 'O') {
@@ -155,14 +159,32 @@
         let main = document.querySelector('.main');
         let start = document.querySelector('.start');
         start.addEventListener('click', () => {
-            start.setAttribute('id', 'hide');
-            let table = document.createElement('table');
-            let tr = document.createElement('tr');
-            let td = document.createElement('td');
+            main.innerHTML = `<table>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>`;
+            // start.setAttribute('id', 'hide');
+            // let table = document.createElement('table');
+            // let tr = document.createElement('tr');
+            // let td = document.createElement('td');
 
-            main.appendChild(table);
-            table.appendChild(tr);
-            tr.appendChild(td);
+            // main.appendChild(table);
+            // table.appendChild(tr);
+            // tr.appendChild(td);
+            playgame();
         })
 
 
