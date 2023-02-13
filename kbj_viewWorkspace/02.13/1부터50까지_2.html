@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        table {
+            /* border: 1px solid black; */
+        }
+
+        table tr td {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            color: white;
+            font-size: 50px;
+            font-weight: bold;
+            background-color: rgb(56, 162, 170)
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .timer {
+            border: 1px solid black;
+            width: 200px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <header> 1부터 50까지_2 </header>
+    <div class="container">
+        <div class="timer"> 00 : 00 </div>
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <div class="off"> 기록은 ... </div>
+    </div>
+
+    <script>
+        let tds = [...document.querySelectorAll('td')];
+
+        let front = [];
+        let back = [];
+
+        for (let i = 1; i < 26; i++) {
+            front.push(i);
+            back.push(i + 25);
+        }
+
+
+        console.log(front);
+        console.log(back);
+
+
+        for (let i = 0; i < front.length; i++) {
+            tds.innerHTML = front[i];
+        }
+
+        let test = [];
+        for (let i = 0; i < 25; i++) {
+            test += i;
+        }
+        console.log(test);
+
+        let answer = 1;
+        let cnt = 0;
+
+        let end = null;
+        let start = null;
+        let now = null;
+        let currentTime = 0;
+
+
+        let intervalTime = 0;
+
+
+        let t = setInterval(() => {
+            intervalTime += 1;
+            let timer = document.querySelector('.timer');
+            let a = `${Math.floor(intervalTime / 60)}`;
+            let b = `${intervalTime % 60}`;
+            if (a, b < 10) {
+                timer.innerHTML = `${a.padStart(2, '0')} : ${b.padStart(2, '0')}`;
+            } else {
+                timer.innerHTML = `${Math.floor(intervalTime / 60)} : ${intervalTime % 60}`;
+            }
+        }, 1000);
+
+
+        tds.forEach((td, i) => {
+            // i = parseInt(Math.random() * 25);
+
+            td.innerHTML = i + 1;
+            i += 1;
+            td.addEventListener('click', () => {
+                if (td.innerHTML == answer) {
+                    td.innerHTML = i + 25;
+                    answer += 1;
+                    cnt += 1;
+                    if (cnt > 25) {
+                        td.style.opacity = 0;
+                    }
+                    console.log(answer);
+                    console.log(cnt);
+                    if (cnt == 1) {
+                        start = new Date();
+                    }
+                    if (cnt == 10) {
+                        end = new Date();
+                    }
+                    now = new Date();
+
+
+
+                };
+                console.log(now - start);
+                console.log(end - start);
+
+                currentTime = now - start;
+                console.log(cnt);
+                // getTime(currentTime);
+
+                if (cnt == 10) {
+                    clearInterval(t);
+
+                    // getTime(currentTime);
+                }
+
+            })
+
+        })
+
+        function getTime(currentTime) {
+            let timer = document.querySelector('.timer');
+            let s = Math.floor(currentTime / 1000 % 60);
+            let m = Math.floor(currentTime / 1000 / 60);
+            timer.innerHTML = `${m} : ${s}`;
+        }
+
+        console.log(end - start);
+        var sum = 0;
+
+        window.addEventListener('load', () => {
+            start = new Date().getTime;
+        });
+
+
+
+        var startTime = new Date();
+        for (var i = 1; i <= 10000000; i++) {
+            sum += i;
+        }
+        var endTime = new Date();
+
+        console.log(endTime - startTime);
+
+        let sTime = start;
+        for (var i = 1; i <= 10000000; i++) {
+            sum += i;
+        }
+        let eTime = end;
+
+        console.log(sTime);
+        console.log(eTime);
+        console.log(eTime - sTime);
+        console.log(start);
+
+
+        console.log(startTime);
+        console.log(endTime);
+    </script>
+</body>
+
+</html>
