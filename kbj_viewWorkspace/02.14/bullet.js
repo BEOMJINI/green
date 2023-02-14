@@ -3,7 +3,7 @@ class Bullet {
         // 불렛의 인스턴스 변수들 => 클래스 필드
         this.radius = 7;
         this.speed = 2;
-        this.color = "green";
+        this.color = "orange";
         this.x; // 현재 총알 x 
         this.y; // 현재 총알 y 
         this.dx; // 도착 x 
@@ -39,7 +39,7 @@ class Bullet {
         // 플레이어 좌표로 도작지점 셋팅 
         let dx = px - this.x;
         let dy = py - this.y;
-        let c = Math.sqrt(dx * dx + dy * dy); // 제곱근
+        let c = Math.sqrt(dx * dx + dy * dy);
         // 바로 가면 플레이어가 즉사 : 조금씩 나눠서 이동 
         this.dx = dx / c;
         this.dy = dy / c;
@@ -70,8 +70,39 @@ class Bullet {
 
     }
 
+    // Math.sqrt => 제곱근
+    // Math.pow => 거듭제곱 
+
+    // Math.sqrt 연산처리가 Math.pow 천배 느리다 
+
+    // 충돌 처리 
     collision(px, py, size) {
+        // 현재 플레이어랑 현재 불렛이랑 거리값 
         let pdw = this.x - px;
         let pdh = this.y - py;
+        let pdc = pdw * pdw + pdh * pdh;
+        // let pdc = Math.sqrt(pdw*pdw + pdh*pdh);
+
+        // if(Math.pow(size + this.size) > pdc) {
+        //     console.log("충돌")
+        //     return true;
+        // }else{
+        //     return false;
+        // }
+
+
+        return Math.pow(size + this.radius, 2) > pdc;
+
     }
+
+
+
+    collision(px, py, size) {   //원 중심구하기
+        let pdw = this.x - px;
+        let pdh = this.y - py;
+        let pdc = pdw * pdw + pdh * pdh;
+        return Math.pow(size + this.radius, 2) > pdc;
+        // 부등호써서 true 
+    }
+
 }

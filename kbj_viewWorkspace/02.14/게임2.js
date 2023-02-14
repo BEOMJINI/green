@@ -1,11 +1,12 @@
 const canvas = document.querySelector("#canvas");
+const startBtn = document.querySelector(".startBtn");
 const ctx = canvas.getContext("2d");
 
 let player = { "x": canvas.width / 2 - 25, "y": canvas.height / 2 - 25, "size": 50, "speed": 3 };
-
 let keyDown = {};
 let bulletList = []; // 총알 객체가 들어가는 배열 
-
+let isOver = false; // 게임 종료 인지 아닌지 
+let time = null; // setInterval 변수 
 window.addEventListener("keydown", (e) => {
     keyDown[e.key] = true;
 
@@ -13,6 +14,8 @@ window.addEventListener("keydown", (e) => {
 window.addEventListener("keyup", (e) => {
     keyDown[e.key] = false;
 })
+
+startBtn.addEventListener("click", startGame);
 
 function bulletInit() {
     // 만들어주고 싶은 총알 갯수 
@@ -29,7 +32,6 @@ function bulletInit() {
 function movePlayer() {
     if (keyDown["ArrowUp"]) {
         player.y -= player.speed;
-        console.log("test");
     } else if (keyDown["ArrowRight"]) {
         player.x += player.speed;
 
@@ -51,15 +53,27 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
     movePlayer();
+    bulletList.forEach((b) => { b.update(player.x, player.y) });
+    bulletList.forEach((b) => {
+
+        if (b.collision(player.x, player.y, player.size / 2)) {
+            gameOver();
+            // alert("gameOver");
+            clearInterval(time);
+            // forEach 문에서 나가기 reutrn false;
+            return false;
+        }
+    });
+
+    if (isOver) {
+        return;
+    }
 
     bulletList.forEach((b) => { b.render(ctx) });
-    bulletList.forEach((b) => { b.update(player.x, player.y) });
-
-
 }
 
 let playerImg = new Image();  // <img>
-playerImg.src = "snoopy.png";
+playerImg.src = "./bug.png";
 
 
 function drawPlayer() {
@@ -68,5 +82,25 @@ function drawPlayer() {
     ctx.closePath();
 }
 
-bulletInit();
-let time = window.setInterval(draw, 10);
+function startGame() {
+    isOver = false;
+    startBtn.style.visibility = "hidden";
+    // 플레이어 초기화
+    player.x = canvas.width / 2 - 25;
+    player.y = canvas.height / 2 - 25;
+    // 총알 초기화 
+    bulletInit();
+    // 게임 시작 
+    time = window.setInterval(draw, 10);
+}
+
+function gameOver() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "40px Gulim";
+    ctx.textAlign = "center";
+    ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2)
+    isOver = true;
+    startBtn.style.visibility = "visible";
+}
+
+//bulletInit();
