@@ -2,6 +2,8 @@ const canvas = document.querySelector('#myCanvas');
 const ctx = canvas.getContext('2d');
 
 let player = { x: 0, y: 600, size: 50, speed: 5 };
+let playerImg = new Image();
+playerImg.src = 'bug.png';
 
 let enemyList = [];
 
@@ -16,12 +18,14 @@ class Enemy {
     }
 
     render(ctx) {
+        let enemyImg = new Image();
+        enemyImg.src = 'bug.png';
         let speed = Math.random() * 5 + 1;
         ctx.beginPath();
         ctx.fillStyle = this.color;
-        ctx.rect(this.x, this.y += speed, this.size, this.size);
+        ctx.drawImage(enemyImg, this.x, this.y += speed, this.size, this.size);
         ctx.fill();
-        // console.log(this.x + ":" + this.y);
+        console.log(this.x + ":" + this.y);
         if (this.y > canvas.height) {
             this.y = 50;
         }
@@ -44,8 +48,8 @@ class Enemy {
 let keyDown = {};
 
 function createE() {
-    for (let i = 0; i < 6; i++) {
-        enemyList[i] = new Enemy(10 + (70 * i));
+    for (let i = 0; i < 7; i++) {
+        enemyList[i] = new Enemy(10 + (120 * i));
     }
 
 }
@@ -64,7 +68,7 @@ function draw() {
 
 function drawPlayer() {
     ctx.beginPath();
-    ctx.rect(player.x, player.y, player.size, player.size);
+    ctx.drawImage(playerImg, player.x, player.y, player.size, player.size);
     ctx.fillStyle = 'blue';
     ctx.fill();
 }
