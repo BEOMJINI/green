@@ -27,6 +27,7 @@ class Player {
         let px = this.x;
         let py = this.y;
         let isCrash = false;
+
         if (keyDown['w']) {
             this.y -= this.speed;
         } else if (keyDown['s']) {
@@ -61,6 +62,7 @@ class Player {
                     console.log('문');
                     const maptest1 = mapList.find(e => e.name == '초기화면1');
                     maptest1.mapRender(ctx, maptest1.objList);
+
                 }
                 return false;
             }
@@ -131,17 +133,17 @@ class Object {
     }
 }
 
-// class Tree {
-//     constructor(x, y) {
-//         this.name = '나무';
-//         this.x = x;
-//         this.y = y;
-//         this.width = 100;
-//         this.height = 300;
-//         this.color = 'green';
+class Tree {
+    constructor(x, y) {
+        this.name = '나무';
+        this.x = x;
+        this.y = y;
+        this.width = 100;
+        this.height = 300;
+        this.color = 'green';
 
-//     }
-// }
+    }
+}
 
 let player = new Player();
 
