@@ -5,14 +5,18 @@ const ctx = canvas.getContext('2d');
 const message = document.querySelector('.message');
 
 let keyDown = {};
-let objectList = [];
+let mainObjectList = [];
 let mapList = [new Map1(), new Map2()];
+let object = new Object();
+let chat = new Chat();
+
+let currentMapName = "메인맵";
 
 let chatScriptName = "";
-let chatScript = new Map([
-    ['바다', '파도가 부드럽게 넘실거리고 있다.'],
-    ['나무', '나무는 앙상한 가지만 남아있다.']
-]);
+// let chatScript = new Map([
+//     ['바다', '파도가 부드럽게 넘실거리고 있다.'],
+//     ['나무', '나무는 앙상한 가지만 남아있다.']
+// ]);
 
 let backImg = new Image();
 backImg.src = "";
@@ -37,7 +41,7 @@ class Player {
         this.x = 0;
         this.y = 0;
         this.size = 50;
-        this.speed = 7;
+        this.speed = 10;
         this.color = 'red';
         this.img = "";
     }
@@ -46,6 +50,7 @@ class Player {
         let px = this.x;
         let py = this.y;
         let isCrash = false;
+
 
         if (keyDown['w']) {
             this.y -= this.speed;
@@ -67,8 +72,9 @@ class Player {
             if (message.style.opacity == 1) {
                 return;
             }
-            console.log(chatScript.get(chatScriptName));
-            printMessage(chatScript.get(chatScriptName));
+            console.log(chat.chat.get(chatScriptName));
+            // console.log(chatScript.get(chatScriptName));
+            printMessage(chat.chat.get(chatScriptName));
             chatScriptName = "";
 
         }
@@ -84,14 +90,14 @@ class Player {
 
 
 
-        objectList.forEach((obj) => {
-            if (this.collision(obj)) {
+        mainObjectList.forEach((obj) => {
+            if (obj.collision(player.x, player.y, player.size)) {
                 isCrash = true;
                 chatScriptName = obj.name;
                 //스위치문
-                if (obj.name == '바다') {
-                    console.log('바다');
-                }
+                // if (obj.name == '바다') {
+                //     console.log('바다');
+                // }
                 if (obj.name == '나무') {
                     console.log('나무');
                 }
@@ -121,8 +127,17 @@ class Player {
                     this.x = 848;
                     this.y = 731;
                 }
+                if (obj.name == '학원입구') {
+                    console.log('ㅎㄱ원익부');
+                    px = 595;
+                    py = 715;
+                    currentMapName = '학원맵';
+                }
                 return false;
             }
+            // else {
+            //     console.log("길~~~~~")
+            // }
         })
 
         console.log("test=", isCrash);
@@ -136,26 +151,6 @@ class Player {
 
     }
 
-
-    inRect(obj, px, py) {
-        if (obj.x < px && px < obj.x + obj.width && obj.y < py && py < obj.y + obj.height) {
-            return true;
-        } else {
-            false;
-        }
-    }
-
-    collision(obj) {
-        if (this.inRect(obj, this.x, this.y)) return true;
-        // player의 오른쪽 상단 모서리가 닿으면
-        else if (this.inRect(obj, this.x + this.size, this.y)) return true;
-        // player의 왼쪽 하단 모서리가 닿으면
-        else if (this.inRect(obj, this.x, this.y + this.size)) return true;
-        // player의 오른쪽 하단 모서리가 닿으면
-        else if (this.inRect(obj, this.x + this.size, this.y + this.size)) return true;
-        else return false;
-
-    }
 
     render(ctx) {
         this.movePlayer();
@@ -177,28 +172,6 @@ class Player {
 
 }
 
-class Object {
-    constructor(img, name, x, y, width, height) {
-        this.img = img;
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        // this.color = color;
-    }
-
-
-    render(ctx) {
-        let objImg = new Image();
-        objImg.src = this.img;
-        ctx.beginPath();
-        // ctx.fillStyle = this.color; 
-        ctx.drawImage(objImg, this.x, this.y, this.width, this.height);
-        ctx.fill();
-
-    }
-}
 
 
 let player = new Player();
@@ -207,7 +180,31 @@ let player = new Player();
 function mainMap() {
     backImg.src = "img/test1.jpg";
     objectList = [];
-
+    objectList.push(new Object('img/snoopy.png', '바다', 0, 190, 90, 320));
+    objectList.push(new Object('img/snoopy.png', '바다', 90, 240, 90, 300));
+    objectList.push(new Object('img/snoopy.png', '바다', 180, 290, 130, 140));
+    objectList.push(new Object('img/snoopy.png', '풍차', 145, 710, 100, 50));
+    objectList.push(new Object('img/snoopy.png', '풍차', 350, 530, 100, 50));
+    objectList.push(new Object('img/snoopy.png', '풍차', 410, 710, 100, 50));
+    objectList.push(new Object('img/snoopy.png', '풍차', 600, 605, 100, 50));
+    objectList.push(new Object('img/snoopy.png', '풍차', 705, 565, 100, 50));
+    objectList.push(new Object('img/snoopy.png', '나무', 290, 630, 70, 150));
+    objectList.push(new Object('img/snoopy.png', '나무', 625, 420, 70, 150));
+    objectList.push(new Object('img/check.png', '숲', 0, 10, 420, 60));
+    objectList.push(new Object('img/check.png', '숲', 90, 85, 380, 40));
+    objectList.push(new Object('img/check.png', '숲', 305, 150, 120, 60));
+    objectList.push(new Object('img/check.png', '숲', 410, 210, 50, 120));
+    objectList.push(new Object('img/check.png', '숲', 790, 350, 120, 200));
+    objectList.push(new Object('img/check.png', '숲', 0, 830, 470, 50));
+    objectList.push(new Object('img/check.png', '숲', 570, 830, 500, 50));
+    objectList.push(new Object('img/check.png', '숲', 1000, 740, 50, 70));
+    objectList.push(new Object('img/check.png', '집', 550, 190, 250, 150));
+    objectList.push(new Object('img/check.png', '학원', 790, 640, 50, 70));
+    objectList.push(new Object('img/check.png', '학원', 920, 640, 100, 70));
+    objectList.push(new Object('img/bug.png', '집입구', 485, 250, 50, 50));
+    objectList.push(new Object('img/bug.png', '학원입구', 855, 655, 50, 50));
+    objectList.push(new Object('img/bug.png', '문3', 485, 843, 50, 50));
+    // console.log(objectList);
     // objectList.forEach((e) => {
     //     console.log(e.x);
     // })
@@ -244,10 +241,37 @@ function draw() {
     // 맵 객체 만들어서 화면에 같이 뿌리기 
     // 맵 객체 [초기화면1, 초기화면2 ]
 
-    objectList.forEach((e) => {
-        e.render(ctx);
+    mapList.forEach((e) => {
+        if (e.name == currentMapName) {
+            // console.log(e.objectList);
+            mainObjectList = [];
+            mainObjectList = e.objectList;
+            // console.log(mainObjectList);
+            // console.log(e.backImgName);
+            backImg.src = e.backImgName;
+        }
     })
     player.render(ctx);
+    mainRender(ctx, mainObjectList);
+
+    // objectList.forEach((e) => {
+    //     e.render(ctx);
+    // })
+
+}
+
+function mainRender(ctx) {
+
+
+    mainObjectList.forEach((obj) => {
+
+        let img = new Image();
+        img.src = obj.img;
+        ctx.beginPath();
+        ctx.drawImage(img, obj.x, obj.y, obj.width, obj.height);
+        ctx.fill();
+
+    })
 
 }
 
@@ -257,6 +281,9 @@ function init() {
 }
 
 function printMessage(chatScript) {
+    if (chatScript == undefined) {
+        return;
+    }
     message.style.opacity = 1;
     let count = 0;
     let content = `${chatScript}`;
@@ -272,17 +299,9 @@ function printMessage(chatScript) {
     message.innerHTML = "";
 }
 
+// mainMap();
+// let dd = new Map1();
+// dd.init();
 
-mainMap();
 init();
-
-console.log(new Map1().objList)
-let time = setInterval(draw, 20);
-canvas.addEventListener("click", () => {
-    clearInterval(time);
-})
-
-canvas.addEventListener("dblclick", () => {
-    time = setInterval(draw, 20);
-})
-
+setInterval(draw, 20);
