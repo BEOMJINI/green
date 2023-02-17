@@ -27,6 +27,7 @@ class Player {
         let px = this.x;
         let py = this.y;
         let isCrash = false;
+
         if (keyDown['w']) {
             this.y -= this.speed;
         } else if (keyDown['s']) {
@@ -60,7 +61,8 @@ class Player {
                 if (obj.name == '문') {
                     console.log('문');
                     const maptest1 = mapList.find(e => e.name == '초기화면1');
-                    maptest1.render(ctx);
+                    maptest1.mapRender(ctx, maptest1.objList);
+
                 }
                 return false;
             }
