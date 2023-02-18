@@ -30,7 +30,7 @@ class Map1 {
         this.objectList.push(new Object('img/check.png', '학원', 920, 640, 100, 70));
         this.objectList.push(new Object('img/bug.png', '집입구', 485, 250, 50, 50));
         this.objectList.push(new Object('img/bug.png', '학원입구', 855, 655, 50, 50));
-        this.objectList.push(new Object('img/bug.png', '문3', 485, 843, 50, 50));
+        this.objectList.push(new Object('img/bug.png', '길건너기입구', 485, 850, 50, 50));
 
     }
 }
@@ -57,34 +57,37 @@ class Map2 {
 
 class Map3 {
     constructor() {
-        this.name = '외부맵';
+        this.name = '길건너기맵';
         this.objectList = [];
         this.init();
-        this.backImgName = 'img/test3.png';
+        this.backImgName = 'img/dumy.png';
     }
 
     init() {
-        this.objectList.push(new Object('img/check.png', '책상', 230, 670, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 230, 470, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 230, 270, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 730, 270, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 730, 470, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 730, 670, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 840, 95, 150, 100));
-        this.objectList.push(new Object('img/bug.png', '학원출구', 595, 805, 50, 50));
+        this.objectList.push(new Object('img/bug.png', '길에서메인으로', 575, 0, 30, 30));
+        this.objectList.push(new Car('img/check.png', '자동차', 0, 250, 150));
+        this.objectList.push(new Car('img/check.png', '자동차', 1200, 325, 150));
+        this.objectList.push(new Car('img/check.png', '자동차', 0, 400, 150));
+        this.objectList.push(new Car('img/check.png', '자동차', 1200, 475, 150));
+        this.objectList.push(new Car('img/check.png', '자동차', 0, 550, 150));
+        this.objectList.push(new Car('img/check.png', '자동차', 1200, 625, 150));
+        this.objectList.push(new Car('img/check.png', '자동차', 0, 700, 150));
+        this.objectList.push(new Object('img/bug.png', '길에서메인으로', 575, 0, 30, 30));
+
     }
 }
 
 class Map4 {
     constructor() {
-        this.name = '전투맵';
+        this.name = '농사맵';
         this.objectList = [];
         this.init();
-        this.backImgName = 'img/test3.png';
+        this.backImgName = 'img/dumy.png';
     }
 
     init() {
-        this.objectList.push(new Object('img/check.png', '책상', 230, 670, 150, 100));
+        this.objectList.push(new Object('img/check.png', '밭', 575, 375, 200, 200));
+        // 아이테에 씨앗이 있으면 심어지는 이미지 > 물ㅇ ㅣ있으면 자라난 이미지 > 캐면 다시 밭 이미지 식으로
         this.objectList.push(new Object('img/check.png', '책상', 230, 470, 150, 100));
         this.objectList.push(new Object('img/check.png', '책상', 230, 270, 150, 100));
         this.objectList.push(new Object('img/check.png', '책상', 730, 270, 150, 100));

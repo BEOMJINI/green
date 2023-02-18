@@ -6,9 +6,10 @@ const message = document.querySelector('.message');
 
 let keyDown = {};
 let mainObjectList = [];
-let mapList = [new Map1(), new Map2()];
-let object = new Object();
+let mapList = [new Map1(), new Map2(), new Map3()];
+// let object = new Object();
 let chat = new Chat();
+
 
 let currentMapName = "메인맵";
 
@@ -41,7 +42,7 @@ class Player {
         this.x = 0;
         this.y = 0;
         this.size = 50;
-        this.speed = 10;
+        this.speed = 5;
         this.color = 'red';
         this.img = "";
     }
@@ -49,6 +50,7 @@ class Player {
     movePlayer() {
         let px = this.x;
         let py = this.y;
+        let ps = this.size;
         let isCrash = false;
 
 
@@ -77,6 +79,11 @@ class Player {
             printMessage(chat.chat.get(chatScriptName));
             chatScriptName = "";
 
+        } else if (keyDown['i']) {
+            if (message.style.opacity == 1) {
+                return;
+            }
+            printMessage(itemList);
         }
 
 
@@ -95,44 +102,72 @@ class Player {
                 isCrash = true;
                 chatScriptName = obj.name;
                 //스위치문
+
+                switch (obj.name) {
+                    case '집입구':
+
+                        break;
+                    case '학원입구':
+                        currentMapName = '학원맵';
+                        px = 0;
+                        py = 0;
+                        break;
+                    case '길건너기입구':
+                        currentMapName = '길건너기맵';
+                        px = 575;
+                        py = 80;
+                        break;
+                    case '길에서메인으로':
+                        currentMapName = '메인맵';
+                        px = 485;
+                        py = 850 - 80;
+                        break;
+                    case '자동차':
+                        px = 575;
+                        py = 80;
+                        break;
+                    default:
+                        break;
+                }
+
                 // if (obj.name == '바다') {
                 //     console.log('바다');
                 // }
-                if (obj.name == '나무') {
-                    console.log('나무');
-                }
-                if (obj.name == '문') {
-                    console.log('문');
-                    this.x = 650;
-                    // isCrash = false;
+                // if (obj.name == '나무') {
+                //     console.log('나무');
+                // }
+                // if (obj.name == '문') {
+                //     console.log('문');
+                //     this.x = 650;
+                //     // isCrash = false;
 
-                    map2();
 
-                }
-                if (obj.name == '문2') {
-                    this.x = 505;
-                    this.y = 430;
-                    // isCrash = false;
 
-                    map3();
+                // }
+                // if (obj.name == '문2') {
+                //     this.x = 505;
+                //     this.y = 430;
+                //     // isCrash = false;
 
-                }
-                if (obj.name == '문3') {
-                    map4();
-                    this.x = 110;
-                    this.y = 700;
-                }
-                if (obj.name == '학원출구') {
-                    map1();
-                    this.x = 848;
-                    this.y = 731;
-                }
-                if (obj.name == '학원입구') {
-                    console.log('ㅎㄱ원익부');
-                    px = 595;
-                    py = 715;
-                    currentMapName = '학원맵';
-                }
+
+
+                // }
+                // if (obj.name == '문3') {
+                //     map4();
+                //     this.x = 110;
+                //     this.y = 700;
+                // }
+                // if (obj.name == '학원출구') {
+                //     map1();
+                //     this.x = 848;
+                //     this.y = 731;
+                // }
+                // if (obj.name == '학원입구') {
+                //     console.log('ㅎㄱ원익부');
+                //     px = 595;
+                //     py = 715;
+                //     currentMapName = '학원맵';
+                // }
                 return false;
             }
             // else {
@@ -242,11 +277,17 @@ function draw() {
     // 맵 객체 [초기화면1, 초기화면2 ]
 
     mapList.forEach((e) => {
+        if (e.name = '농사맵') {
+            mainObjectList = [];
+            mainObjectList = e.objectList;
+            const qkq = mainObjectList.find('밭');
+            update(qkq.x, qkq.y);
+        }
         if (e.name == currentMapName) {
             // console.log(e.objectList);
             mainObjectList = [];
             mainObjectList = e.objectList;
-            // console.log(mainObjectList);
+            console.log(mainObjectList);
             // console.log(e.backImgName);
             backImg.src = e.backImgName;
         }
@@ -260,10 +301,16 @@ function draw() {
 
 }
 
+const c = new Car();
 function mainRender(ctx) {
 
 
     mainObjectList.forEach((obj) => {
+
+        if (obj.name == '자동차') {
+            c.moveCar(obj);
+        }
+
 
         let img = new Image();
         img.src = obj.img;
@@ -274,6 +321,18 @@ function mainRender(ctx) {
     })
 
 }
+
+// function moveCar(obj) {
+//     if (obj.name = '자동차') {
+//         const speed = Math.random() * 10 + 1;
+//         if (obj.x == 0) {
+//             obj.x += speed;
+
+
+//         }
+//     }
+
+// }
 
 function init() {
     player.x = 15;
