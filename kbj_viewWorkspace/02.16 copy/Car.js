@@ -45,9 +45,9 @@ class Car {
 
     moveCar(obj) {
 
-        const speed = Math.floor(Math.random() * 20 + 1);
-        console.log(speed);
-        // console.log(obj.y / 2);
+        const speed = Math.floor(Math.random() * 10 + 1);
+
+
         if (obj.y % 2 == 0) {
             obj.x += speed;
             if (obj.x > canvas.width) {

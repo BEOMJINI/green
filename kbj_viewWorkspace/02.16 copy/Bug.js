@@ -7,7 +7,7 @@ class Bug {
         this.y = Math.random() * 900 + 100;
         this.width = 50;
         this.height = 50;
-        this.speed = 1;
+        this.speed = Math.floor(Math.random() * 2 + 1);
     }
 
 
@@ -43,7 +43,8 @@ class Bug {
 
     }
 
-    moveBug(obj, qkq) {
+    moveBug(obj, qkq, message) {
+
         let dx = qkq.x + qkq.width / 2 - obj.x - obj.width / 2;
         let dy = qkq.y + qkq.height / 2 - obj.y - obj.height / 2;
         let c = Math.sqrt(dx * dx + dy * dy);
@@ -57,10 +58,18 @@ class Bug {
         let a = Math.floor(obj.x);
         let b = Math.floor(obj.y);
 
-        if (a == 585 && b == 425) {
+        console.log(a, ":", b);
+
+        if (a >= 580 && a <= 590 && b >= 420 && b <= 430) {
             obj.x = 1300;
             obj.speed = 0;
             qkq.img = 'img/bug.png';
+            message.style.opacity = 1;
+            message.innerHTML = '지키지 못했다. 다음에 다시 도전해 보자';
+            setTimeout(() => {
+                message.innerHTML = "";
+                message.style.opacity = 0;
+            }, 1000);
         }
     }
     addX() {
