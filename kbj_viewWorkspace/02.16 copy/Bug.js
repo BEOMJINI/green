@@ -1,15 +1,13 @@
 
 class Bug {
-    constructor() {
-        this.img = './img/bug.png';
-        this.name = '벌레';
+    constructor(img, name) {
+        this.img = img;
+        this.name = name;
+        this.x = this.addX();
+        this.y = Math.random() * 900 + 100;
         this.width = 50;
         this.height = 50;
         this.speed = 1;
-        this.x;
-        this.y;
-        this.targetX;
-        this.targetY;
     }
 
 
@@ -45,27 +43,37 @@ class Bug {
 
     }
 
-    init(gardenX, gardenY) {
-        const dir = Math.floor(Math.random() * 2);
-        if (dir == 0) {
-            this.x = 0;
-            this.y = Math.random() * 900;
-        } else {
-            this.x = 1200;
-            this.y = Math.random() * 900;
+    moveBug(obj, qkq) {
+        let dx = qkq.x + qkq.width / 2 - obj.x - obj.width / 2;
+        let dy = qkq.y + qkq.height / 2 - obj.y - obj.height / 2;
+        let c = Math.sqrt(dx * dx + dy * dy);
+
+        let tdx = dx / c;
+        let tdy = dy / c;
+
+        obj.x += tdx * obj.speed;
+        obj.y += tdy * obj.speed;
+
+        let a = Math.floor(obj.x);
+        let b = Math.floor(obj.y);
+
+        if (a == 585 && b == 425) {
+            obj.x = 1300;
+            obj.speed = 0;
+            qkq.img = 'img/bug.png';
         }
-        let xx = gardenX - this.x;
-        let yy = gardenY - this.y;
-        let zz = Math.sqrt(xx * xx + yy * yy);
-        this.targetX = xx / zz;
-        this.targetY = yy / zz;
-
     }
-
-    createBug(gardenX, gardenY) {
-        this.x += this.targetX * this.speed;
-        this.y += this.targetY * this.speed;
-
+    addX() {
+        const dir = Math.floor(Math.random() * 2);
+        let x = 0;
+        if (dir == 0) {
+            x = 20;
+        } else {
+            x = 1180;
+        }
+        return x;
     }
 
 }
+
+

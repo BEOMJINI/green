@@ -6,7 +6,7 @@ const message = document.querySelector('.message');
 
 let keyDown = {};
 let mainObjectList = [];
-let mapList = [new Map1(), new Map2(), new Map3()];
+let mapList = [new Map1(), new Map2(), new Map3(), new Map4()];
 // let object = new Object();
 let chat = new Chat();
 
@@ -42,7 +42,7 @@ class Player {
         this.x = 0;
         this.y = 0;
         this.size = 50;
-        this.speed = 5;
+        this.speed = 10;
         this.color = 'red';
         this.img = "";
     }
@@ -125,6 +125,15 @@ class Player {
                     case '자동차':
                         px = 575;
                         py = 80;
+                        break;
+                    case '길에서농사로':
+                        currentMapName = '농사맵';
+                        px = 575;
+                        py = 80;
+                        break;
+                    case '벌레':
+                        obj.x = 1300;
+                        obj.speed = 0;
                         break;
                     default:
                         break;
@@ -269,6 +278,8 @@ function map4() {
 function map5() {
 
 }
+const bugs = new Bug();
+let qkq = null;
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -277,19 +288,22 @@ function draw() {
     // 맵 객체 [초기화면1, 초기화면2 ]
 
     mapList.forEach((e) => {
-        if (e.name = '농사맵') {
-            mainObjectList = [];
-            mainObjectList = e.objectList;
-            const qkq = mainObjectList.find('밭');
-            update(qkq.x, qkq.y);
-        }
         if (e.name == currentMapName) {
-            // console.log(e.objectList);
-            mainObjectList = [];
-            mainObjectList = e.objectList;
-            console.log(mainObjectList);
-            // console.log(e.backImgName);
-            backImg.src = e.backImgName;
+            if (currentMapName == '농사맵') {
+                mainObjectList = [];
+                mainObjectList = e.objectList;
+                qkq = mainObjectList.find(e => e.name == '정원');
+                // bugs.moveBug(qkq.x, qkq.y);
+                // bugs.setBugs(mainObjectList);
+                console.log(mainObjectList);
+            } else {
+                // console.log(e.objectList);
+                mainObjectList = [];
+                mainObjectList = e.objectList;
+                console.log(mainObjectList);
+                // console.log(e.backImgName);
+                backImg.src = e.backImgName;
+            }
         }
     })
     player.render(ctx);
@@ -310,7 +324,11 @@ function mainRender(ctx) {
         if (obj.name == '자동차') {
             c.moveCar(obj);
         }
-
+        if (obj.name == '벌레') {
+            // bugs.init(obj, qkq.x, qkq.y);
+            // bugs.test(obj);
+            bugs.moveBug(obj, qkq);
+        }
 
         let img = new Image();
         img.src = obj.img;

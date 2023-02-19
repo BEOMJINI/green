@@ -72,7 +72,7 @@ class Map3 {
         this.objectList.push(new Car('img/check.png', '자동차', 0, 550, 150));
         this.objectList.push(new Car('img/check.png', '자동차', 1200, 625, 150));
         this.objectList.push(new Car('img/check.png', '자동차', 0, 700, 150));
-        this.objectList.push(new Object('img/bug.png', '길에서메인으로', 575, 0, 30, 30));
+        this.objectList.push(new Object('img/bug.png', '길에서농사로', 575, 870, 30, 30));
 
     }
 }
@@ -86,14 +86,13 @@ class Map4 {
     }
 
     init() {
-        this.objectList.push(new Object('img/check.png', '밭', 575, 375, 200, 200));
+        this.objectList.push(new Object('img/check.png', '정원', 510, canvas.height / 2 - 100, 200, 200));
         // 아이테에 씨앗이 있으면 심어지는 이미지 > 물ㅇ ㅣ있으면 자라난 이미지 > 캐면 다시 밭 이미지 식으로
-        this.objectList.push(new Object('img/check.png', '책상', 230, 470, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 230, 270, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 730, 270, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 730, 470, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 730, 670, 150, 100));
-        this.objectList.push(new Object('img/check.png', '책상', 840, 95, 150, 100));
+        this.objectList.push(new Bug('img/bug.png', '벌레'));
+        this.objectList.push(new Bug('img/bug.png', '벌레'));
+        this.objectList.push(new Bug('img/bug.png', '벌레'));
+        this.objectList.push(new Bug('img/bug.png', '벌레'));
+        this.objectList.push(new Bug('img/bug.png', '벌레'));
         this.objectList.push(new Object('img/bug.png', '학원출구', 595, 805, 50, 50));
     }
 }
