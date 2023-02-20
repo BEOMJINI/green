@@ -125,6 +125,9 @@ class Map6 {
     }
 
     init() {
+        this.objectList.push(new Fish('img/bug.png', '벌레'));
+        this.objectList.push(new Fish('img/bug.png', '벌레'));
+        this.objectList.push(new Fish('img/bug.png', '벌레'));
 
     }
 }

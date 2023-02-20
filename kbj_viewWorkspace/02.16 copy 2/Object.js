@@ -33,11 +33,11 @@ class Object {
     collision(px, py, size) {
 
         if (this.inRect(px, py)) return true;
-
+        // player의 오른쪽 상단 모서리가 닿으면
         else if (this.inRect(px + size, py)) return true;
-
+        // player의 왼쪽 하단 모서리가 닿으면
         else if (this.inRect(px, py + size)) return true;
-
+        // player의 오른쪽 하단 모서리가 닿으면
         else if (this.inRect(px + size, py + size)) return true;
         else return false;
 
